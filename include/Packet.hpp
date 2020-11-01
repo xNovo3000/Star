@@ -4,44 +4,48 @@
 #include <string>
 #include <cstdint>
 
-class Packet {
+namespace Star {
 
-	public:
-		Packet();
-		Packet(uint32_t);
-		~Packet() = default;
+	class Packet {
 
-		Packet(const Packet&) = default;
-		Packet& operator=(const Packet&) = default;
+		public:
+			Packet();
+			Packet(uint32_t);
+			~Packet() = default;
 
-		Packet(Packet&&) noexcept = default;
-		Packet& operator=(Packet&&) noexcept = default;
+			Packet(const Packet&) = default;
+			Packet& operator=(const Packet&) = default;
 
-		void append(const void*, uint32_t);
-		void read(void*, uint32_t) const;
+			Packet(Packet&&) noexcept = default;
+			Packet& operator=(Packet&&) noexcept = default;
 
-		Packet& operator<<(const uint32_t);
-		Packet& operator<<(const uint16_t);
-		Packet& operator<<(const uint8_t);
-		Packet& operator<<(const float);
-		Packet& operator<<(const std::string&);
+			void append(const void*, uint32_t);
+			void read(void*, uint32_t) const;
 
-		const Packet& operator>>(uint32_t&) const;
-		const Packet& operator>>(uint16_t&) const;
-		const Packet& operator>>(uint8_t&) const;
-		const Packet& operator>>(float&) const;
-		const Packet& operator>>(std::string&) const;
+			Packet& operator<<(const uint32_t);
+			Packet& operator<<(const uint16_t);
+			Packet& operator<<(const uint8_t);
+			Packet& operator<<(const float);
+			Packet& operator<<(const std::string&);
 
-		void reserve(uint32_t);
-		void resize(uint32_t);
+			const Packet& operator>>(uint32_t&) const;
+			const Packet& operator>>(uint16_t&) const;
+			const Packet& operator>>(uint8_t&) const;
+			const Packet& operator>>(float&) const;
+			const Packet& operator>>(std::string&) const;
 
-		const uint8_t* data() const noexcept;
-		uint8_t* data() noexcept;
-		uint32_t size() const noexcept;
-		bool empty() const noexcept;
-	
-	private:
-		std::vector<uint8_t> m_Data;
-		mutable uint32_t m_Offset;
+			void reserve(uint32_t);
+			void resize(uint32_t);
 
-};
+			const uint8_t* data() const noexcept;
+			uint8_t* data() noexcept;
+			uint32_t size() const noexcept;
+			bool empty() const noexcept;
+		
+		private:
+			std::vector<uint8_t> m_Data;
+			mutable uint32_t m_Offset;
+
+	};
+
+}

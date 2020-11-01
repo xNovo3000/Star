@@ -2,6 +2,8 @@
 
 #include <unistd.h>
 
+using namespace Star;
+
 Listener::Listener() : m_ID(socket(AF_INET, SOCK_STREAM, 0)), m_State(State::IDLE), m_ListeningAddress(), m_Listener() {
 	//IF SOCKET ASSEGNATION FAILS, THROWS AN ERROR
 	if (m_ID == -1) throw SocketError();

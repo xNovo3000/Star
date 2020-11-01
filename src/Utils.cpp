@@ -1,5 +1,7 @@
 #include <Utils.hpp>
 
+using namespace Star;
+
 const char* ParsingError::what() const noexcept {
 	return "Error parsing an IPv4 address from std::string to 4 byte integer!";
 }

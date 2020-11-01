@@ -2,6 +2,8 @@
 #include <cstring>
 #include <endian.h>
 
+using namespace Star;
+
 Packet::Packet() : m_Data(), m_Offset(0) {}
 Packet::Packet(uint32_t initialSize) : m_Data(initialSize), m_Offset(0) {}
 

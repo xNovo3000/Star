@@ -10,30 +10,34 @@
 #include "EndPoint.hpp"
 #include "Utils.hpp"
 
-class Listener {
+namespace Star {
 
-	public:
-		Listener();
-		~Listener();
+	class Listener {
 
-		Listener(const Listener&) = delete;
-		Listener& operator=(const Listener&) = delete;
+		public:
+			Listener();
+			~Listener();
 
-		Listener(Listener&&) noexcept = delete;
-		Listener& operator=(Listener&&) noexcept = delete;
+			Listener(const Listener&) = delete;
+			Listener& operator=(const Listener&) = delete;
 
-		Response startListening(in_port_t, std::function<void(std::shared_ptr<EndPoint>)>);
-		Response stopListening();
+			Listener(Listener&&) noexcept = delete;
+			Listener& operator=(Listener&&) noexcept = delete;
 
-		const State& getState() const noexcept;
+			Response startListening(in_port_t, std::function<void(std::shared_ptr<EndPoint>)>);
+			Response stopListening();
 
-	private:
-		void _async_listen();
+			const State& getState() const noexcept;
 
-		int m_ID;
-		State m_State;
-		Address m_ListeningAddress;
-		std::thread m_Listener;
-		std::function<void(std::shared_ptr<EndPoint>)> m_AcceptFunction;
+		private:
+			void _async_listen();
 
-};
+			int m_ID;
+			State m_State;
+			Address m_ListeningAddress;
+			std::thread m_Listener;
+			std::function<void(std::shared_ptr<EndPoint>)> m_AcceptFunction;
+
+	};
+
+}

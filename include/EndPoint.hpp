@@ -9,42 +9,46 @@
 #include "Packet.hpp"
 #include "Utils.hpp"
 
-class EndPoint {
+namespace Star {
 
-	public:
-		EndPoint();
-		EndPoint(int, Address&);
-		~EndPoint();
+	class EndPoint {
 
-		EndPoint(const EndPoint&) = delete;
-		EndPoint& operator=(const EndPoint&) = delete;
+		public:
+			EndPoint();
+			EndPoint(int, Address&);
+			~EndPoint();
 
-		EndPoint(EndPoint&&) noexcept = delete;
-		EndPoint& operator=(EndPoint&&) noexcept = delete;
+			EndPoint(const EndPoint&) = delete;
+			EndPoint& operator=(const EndPoint&) = delete;
 
-		Response connect(const Address&);
-		Response disconnect();
+			EndPoint(EndPoint&&) noexcept = delete;
+			EndPoint& operator=(EndPoint&&) noexcept = delete;
 
-		Response send(const Packet&);
-		Response send(Packet&&);
+			Response connect(const Address&);
+			Response disconnect();
 
-		const State& getState() const noexcept;
-		const Address& getPeerAddress() const noexcept;
+			Response send(const Packet&);
+			Response send(Packet&&);
 
-		Packet& front();
-		void pop();
-		size_t size() const;
-		bool empty() const;
-	
-	private:
-		void _async_send();
-		void _async_receive();
+			const State& getState() const noexcept;
+			const Address& getPeerAddress() const noexcept;
 
-		int m_ID;
-		State m_State;
-		Address m_EndPointAddress;
-		std::thread m_InputAsync, m_OutputAsync;
-		std::mutex m_InputLock, m_OutputLock;
-		std::queue<Packet> m_InputPackets, m_OutputPackets;
+			Packet& front();
+			void pop();
+			size_t size() const;
+			bool empty() const;
+		
+		private:
+			void _async_send();
+			void _async_receive();
 
-};
+			int m_ID;
+			State m_State;
+			Address m_EndPointAddress;
+			std::thread m_InputAsync, m_OutputAsync;
+			std::mutex m_InputLock, m_OutputLock;
+			std::queue<Packet> m_InputPackets, m_OutputPackets;
+
+	};
+
+}

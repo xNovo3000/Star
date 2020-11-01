@@ -1,6 +1,8 @@
 #include <Address.hpp>
 #include <Utils.hpp>
 
+using namespace Star;
+
 Address::Address() : m_Address() {
 	m_Address.sin_family = AF_INET;
 	m_Address.sin_addr.s_addr = 0;

@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 
+using namespace Star;
+
 constexpr time_t TIMEOUT = 10;
 
 EndPoint::EndPoint() :
