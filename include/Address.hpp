@@ -32,8 +32,8 @@ namespace Star {
 
 			static Address fromSocket(int);
 
-			friend bool operator==(const Address&, const Address&);
-			friend bool operator!=(const Address&, const Address&);
+			bool operator==(const Address&) const noexcept;
+			bool operator!=(const Address&) const noexcept;
 		
 		private:
 			sockaddr_in m_Address;

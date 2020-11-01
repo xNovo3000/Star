@@ -23,14 +23,20 @@ namespace Star {
 			void read(void*, uint32_t) const;
 
 			Packet& operator<<(const uint32_t);
+			Packet& operator<<(const int32_t);
 			Packet& operator<<(const uint16_t);
+			Packet& operator<<(const int16_t);
 			Packet& operator<<(const uint8_t);
+			Packet& operator<<(const int8_t);
 			Packet& operator<<(const float);
 			Packet& operator<<(const std::string&);
 
 			const Packet& operator>>(uint32_t&) const;
+			const Packet& operator>>(int32_t&) const;
 			const Packet& operator>>(uint16_t&) const;
+			const Packet& operator>>(int16_t&) const;
 			const Packet& operator>>(uint8_t&) const;
+			const Packet& operator>>(int8_t&) const;
 			const Packet& operator>>(float&) const;
 			const Packet& operator>>(std::string&) const;
 

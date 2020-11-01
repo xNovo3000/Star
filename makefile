@@ -25,7 +25,9 @@ clean:
 	rm -f $(BIN)/$(X86)/*
 
 $(OBJ)/$(X86)/%.o : $(SRC)/%.cpp
+	mkdir -p $(@D)
 	$(CXX) $(CFLAGS) -c $< -o $@
 
 $(OBJ)/$(ARM)/%.o : $(SRC)/%.cpp
+	mkdir -p $(@D)
 	$(CXX) $(CFLAGS) -c $< -o $@

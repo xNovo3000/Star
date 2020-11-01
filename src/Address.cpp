@@ -50,12 +50,12 @@ Address Address::fromSocket(int socket) {
 	return address;
 }
 
-/* OPTIMIZED COMPARISON */
-bool operator==(const Address& lhs, const Address& rhs) {
-	return (lhs.m_Address.sin_addr.s_addr == rhs.m_Address.sin_addr.s_addr) &&
-		   (lhs.m_Address.sin_port == rhs.m_Address.sin_port);
+bool Address::operator==(const Address& rhs) const noexcept {
+	return (m_Address.sin_addr.s_addr == rhs.m_Address.sin_addr.s_addr) &&
+		   (m_Address.sin_port == rhs.m_Address.sin_port);
 }
-bool operator!=(const Address& lhs, const Address& rhs) {
-	return (lhs.m_Address.sin_addr.s_addr != rhs.m_Address.sin_addr.s_addr) ||
-		   (lhs.m_Address.sin_port != rhs.m_Address.sin_port);
+
+bool Address::operator!=(const Address& rhs) const noexcept {
+	return (m_Address.sin_addr.s_addr != rhs.m_Address.sin_addr.s_addr) ||
+		   (m_Address.sin_port != rhs.m_Address.sin_port);
 }

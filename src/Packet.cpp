@@ -25,6 +25,14 @@ Packet& Packet::operator<<(const uint32_t value) {
 	return *this;
 }
 
+Packet& Packet::operator<<(const int32_t value) {
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+	value = htole32(value);
+#endif
+	append(&value, sizeof(int32_t));
+	return *this;
+}
+
 Packet& Packet::operator<<(const uint16_t value) {
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 	value = htole16(value);
@@ -33,7 +41,20 @@ Packet& Packet::operator<<(const uint16_t value) {
 	return *this;
 }
 
+Packet& Packet::operator<<(const int16_t value) {
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+	value = htole16(value);
+#endif
+	append(&value, sizeof(int16_t));
+	return *this;
+}
+
 Packet& Packet::operator<<(const uint8_t value) {
+	m_Data.push_back(value);
+	return *this;
+}
+
+Packet& Packet::operator<<(const int8_t value) {
 	m_Data.push_back(value);
 	return *this;
 }
@@ -59,6 +80,16 @@ const Packet& Packet::operator>>(uint32_t& value) const {
 	return *this;
 }
 
+const Packet& Packet::operator>>(int32_t& value) const {
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+	value = htobe32(*reinterpret_cast<const uint32_t*>(&m_Data[m_Offset]));
+#else
+	value = *reinterpret_cast<const uint32_t*>(&m_Data[m_Offset]);
+#endif
+	m_Offset += sizeof(uint32_t);
+	return *this;
+}
+
 const Packet& Packet::operator>>(uint16_t& value) const {
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 	value = htobe16(*reinterpret_cast<const uint32_t*>(&m_Data[m_Offset]));
@@ -69,7 +100,23 @@ const Packet& Packet::operator>>(uint16_t& value) const {
 	return *this;
 }
 
+const Packet& Packet::operator>>(int16_t& value) const {
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+	value = htobe16(*reinterpret_cast<const uint32_t*>(&m_Data[m_Offset]));
+#else
+	value = *reinterpret_cast<const uint16_t*>(&m_Data[m_Offset]);
+#endif
+	m_Offset += sizeof(uint16_t);
+	return *this;
+}
+
 const Packet& Packet::operator>>(uint8_t& value) const {
+	value = m_Data[m_Offset];
+	m_Offset += sizeof(uint8_t);
+	return *this;
+}
+
+const Packet& Packet::operator>>(int8_t& value) const {
 	value = m_Data[m_Offset];
 	m_Offset += sizeof(uint8_t);
 	return *this;
