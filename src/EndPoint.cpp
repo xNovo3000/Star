@@ -31,8 +31,11 @@ m_InputLock(), m_OutputLock(), m_InputPackets(), m_OutputPackets()
 }
 
 EndPoint::~EndPoint() {
-	disconnect();
-	if (m_ID != -1) close(m_ID);
+	//SAME AS LISTENER
+	if (m_ID != -1) {
+		disconnect();
+		close(m_ID);
+	}
 }
 
 Response EndPoint::connect(const Address& address) {

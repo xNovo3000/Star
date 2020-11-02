@@ -21,8 +21,8 @@ namespace Star {
 			Listener(const Listener&) = delete;
 			Listener& operator=(const Listener&) = delete;
 
-			Listener(Listener&&) noexcept = delete;
-			Listener& operator=(Listener&&) noexcept = delete;
+			Listener(Listener&&) noexcept;
+			Listener& operator=(Listener&&) noexcept;
 
 			Response startListening(in_port_t, std::function<void(std::shared_ptr<EndPoint>)>);
 			Response stopListening();

@@ -4,16 +4,38 @@
 
 using namespace Star;
 
-Listener::Listener() : m_ID(socket(AF_INET, SOCK_STREAM, 0)), m_State(State::IDLE), m_ListeningAddress(), m_Listener() {
+Listener::Listener() :
+m_ID(socket(AF_INET, SOCK_STREAM, 0)), m_State(State::IDLE),
+m_ListeningAddress(), m_Listener(), m_AcceptFunction() {
 	//IF SOCKET ASSEGNATION FAILS, THROWS AN ERROR
 	if (m_ID == -1) throw SocketError();
 }
 
 Listener::~Listener() {
-	//STOP LISTENING
-	stopListening();
-	//DESTROY THE SOCKET
-	if (m_ID != -1) close(m_ID);
+	if (m_ID != -1) { //IF THE SOCKET IS VALID
+		//DISCONNECT AND CLOSE
+		stopListening();
+		close(m_ID);
+	}
+}
+
+Listener::Listener(Listener&& other) noexcept :
+m_ID(other.m_ID), m_State(other.m_State), m_ListeningAddress(std::move(other.m_ListeningAddress)), 
+m_Listener(std::move(other.m_Listener)), m_AcceptFunction(std::move(other.m_AcceptFunction))
+{
+	other.m_ID = -1;
+	other.m_State = State::IDLE;
+}
+
+Listener& Listener::operator=(Listener&& other) noexcept {
+	m_ID = other.m_ID;
+	m_State = other.m_State;
+	m_ListeningAddress = std::move(other.m_ListeningAddress);
+	m_Listener = std::move(other.m_Listener);
+	m_AcceptFunction = std::move(other.m_AcceptFunction);
+	other.m_ID = -1;
+	other.m_State = State::IDLE;
+	return *this;
 }
 
 Response Listener::startListening(in_port_t port, std::function<void(std::shared_ptr<EndPoint>)> func) {
